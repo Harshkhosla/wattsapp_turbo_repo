@@ -1,3 +1,6 @@
+// "use client"
+import { Text } from "@repo/ui/text";
+
 export default async function ({ params }: {
     params: {
         group: string
@@ -7,7 +10,7 @@ export default async function ({ params }: {
     console.log(data);
 
     return <div>
-        dvlkjsvndksjsdvb{data}
+        <Text classname="mt-3 text-xl font-bold" children={`You have joined the room ${data}`}/>
     </div>
 
 }

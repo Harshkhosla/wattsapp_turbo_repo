@@ -15,8 +15,6 @@ export default function Home() {
     // alert("hello ")
     router.push(`/group/${group}`)
   }
-
-
   return (
     <div >
 
