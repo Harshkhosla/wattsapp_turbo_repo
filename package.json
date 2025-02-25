@@ -12,13 +12,13 @@
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.8",
     "prettier": "^3.2.5",
-    "turbo": "^2.3.3",
+    "turbo": "^2.4.2",
     "typescript": "5.5.4"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "yarn@1.22.22",
   "workspaces": [
     "apps/*",
     "packages/*"

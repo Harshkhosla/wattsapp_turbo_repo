@@ -2,9 +2,11 @@
   "name": "@repo/validators",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "types/express.d.ts",
   "exports": {
-  "./config": "./src/config.ts"
-},
+    "./config": "./src/config.ts",
+    "./types": "./types/express.d.ts"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
