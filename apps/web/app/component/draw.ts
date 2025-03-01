@@ -19,13 +19,19 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , so
     if (!ctx) return;
 
     let existingShapes: Shape[] = await getRoomShapes(roomId);
+    console.log(existingShapes);
+    
 
     // Ensure canvas is cleared and set to black
     clearCanvas(existingShapes, canvas, ctx);
     socket.onmessage = (event) => {
         const parsedData = JSON.parse(event.data);
+        console.log(parsedData);
+        
         if (parsedData.type === "chat") {
-            existingShapes.push(parsedData.message);
+            console.log(parsedData.message);
+            const shapesDatra = JSON.parse(parsedData.message);
+            existingShapes.push(shapesDatra);
             clearCanvas(existingShapes, canvas, ctx);
         }
     };
@@ -43,7 +49,7 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , so
                 const height = e.clientY-StartY;
                 const shape: Shape = { type: "rect", x:StartX, y:StartY, width, height };
                 existingShapes.push(shape);
-                socket.send(JSON.stringify({ type: "chat", message: shape }));
+                socket.send(JSON.stringify({ type: "chat", message: JSON.stringify(shape) ,roomId }));
                 clearCanvas(existingShapes, canvas, ctx);
                
             })
