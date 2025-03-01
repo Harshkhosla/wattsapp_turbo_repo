@@ -14,17 +14,21 @@ type Shape = {
     radius:number;
 }
 
-export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string ){
+export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , socket: WebSocket ){
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
 
-    let  existingshapes: Shape[] = await getRoomId(roomId);
+    let existingShapes: Shape[] = await getRoomShapes(roomId);
 
-    const ctx = canvas.getContext('2d');
-            
-    if (!ctx) {
-        return
-    }
-    ctx.fillStyle = 'rgba(0,0,0)'
-            ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // Ensure canvas is cleared and set to black
+    clearCanvas(existingShapes, canvas, ctx);
+    socket.onmessage = (event) => {
+        const parsedData = JSON.parse(event.data);
+        if (parsedData.type === "chat") {
+            existingShapes.push(parsedData.message);
+            clearCanvas(existingShapes, canvas, ctx);
+        }
+    };
             let clicked = false;
             let StartX= 0 
             let StartY= 0 
@@ -37,19 +41,17 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string ){
                 clicked = false;
                 const width = e.clientX-StartX;
                 const height = e.clientY-StartY;
-                existingshapes.push({
-                    type: "rect",
-                    x: StartX,
-                    y: StartY,
-                    height,
-                    width
-                })
+                const shape: Shape = { type: "rect", x:StartX, y:StartY, width, height };
+                existingShapes.push(shape);
+                socket.send(JSON.stringify({ type: "chat", message: shape }));
+                clearCanvas(existingShapes, canvas, ctx);
+               
             })
             canvas.addEventListener('mousemove', (e) => {
                 if(clicked){
                     const width = e.clientX-StartX;
                     const height = e.clientY-StartY;
-                    clearCanvas(existingshapes, canvas, ctx)
+                    clearCanvas(existingShapes, canvas, ctx)
                     ctx.strokeStyle = 'rgba(255,255,255)'
                     ctx.strokeRect(StartX, StartY, width, height)
                 }
@@ -71,12 +73,12 @@ function clearCanvas(existingShapes :Shape[], canvas: HTMLCanvasElement , ctx: C
 
 }
 
-async function getRoomId (slug:string){
-    const response = await axios.get(`http://localhost:4000/chats/${roomId}`);
-   const message =   response.data.messages
-   const shape= message.map((x:{message:string})=>{
-    const messageData = JSON.parse(x.message)
-    return messageData
-   })
-   return shape;
+async function getRoomShapes(roomId: string) {
+    try {
+        const response = await axios.get(`http://localhost:4000/chats/${roomId}`);
+        return response.data.messages.map((x: { message: string }) => JSON.parse(x.message));
+    } catch (error) {
+        console.error("Error fetching room data:", error);
+        return [];
+    }
 }
