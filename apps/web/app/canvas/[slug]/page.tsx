@@ -23,7 +23,7 @@ export default  async function ChatRoom({ params }: {
     const roomId = await getRoomId(slug)
     return <div>
 
-        <Text classname="mt-3 text-xl font-bold" children={`You have joined the room ${roomId}`}/>
+        {/* <Text classname="mt-3 text-xl font-bold" children={`You have joined the room ${roomId}`}/> */}
        <Canvas id={roomId}/>
         {/* <ChatRoomcmp id={roomId}/> */}
     </div>
