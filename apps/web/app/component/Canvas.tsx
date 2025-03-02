@@ -20,6 +20,9 @@ export default function Canvas(roomId: string) {
     const onchange2 = () => {
         setShape("line")
     }
+    const onchange3 = () => {
+        setShape("pencil")
+    }
     const { loading, socket } = useSocket();
     useEffect(() => {
         game?.selectTool(shape)
@@ -74,6 +77,14 @@ export default function Canvas(roomId: string) {
                             onClick={onchange2}
                         >
                             Line
+                        </Button>
+                        <Button
+                            className={`my-4 mx-4 px-3 py-2 rounded-md border text-white ${shape === "pencil" ? "bg-blue-500 hover:bg-blue-600" : "bg-green-500 hover:bg-green-600"
+                                }`}
+                            appName="Line"
+                            onClick={onchange3}
+                        >
+                            pencil
                         </Button>
 
                     </div>

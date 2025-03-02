@@ -17,6 +17,12 @@ type Shape = {
     startY: number;
     endX: number;
     endY: number;
+} |{
+    type : "pecil";
+    x:number;
+    y:number;
+    width:number;
+    height:number;
 }
 
 export class Game {
@@ -79,6 +85,11 @@ export class Game {
                 this.ctx.beginPath();
                 this.ctx.arc(shape.centerX, shape.centerY, shape.radius, 0, 2 * Math.PI);
                 this.ctx.stroke();
+            }else if(shape.type == "line"){
+                this.ctx.beginPath();
+                this.ctx.moveTo(shape.startX,shape.startY);
+                this.ctx.lineTo(shape.endX,shape.endY);
+                this.ctx.stroke();
             }
         })
     }
@@ -105,6 +116,11 @@ export class Game {
             this.existingShapes.push(shape);
             this.socket.send(JSON.stringify({ type: "chat", message: JSON.stringify(shape), roomId: this.roomId }));
             this.clearCanvas();
+        }else if(selectedTool == "line"){
+            const shape: Shape = { type: "line", startX: this.StartX, startY: this.StartY, endX: e.clientX, endY: e.clientY };
+            this.existingShapes.push(shape);
+            this.socket.send(JSON.stringify({ type: "chat", message: JSON.stringify(shape), roomId: this.roomId }));
+            this.clearCanvas();
         }
     }
 
@@ -121,6 +137,11 @@ export class Game {
             }else if(selectedTool == "circle"){
                 this.ctx.beginPath();
                 this.ctx.arc(this.StartX, this.StartY, Math.sqrt(width**2 + height**2), 0, 2 * Math.PI);
+                this.ctx.stroke();
+            }else if(selectedTool == "line"){
+                this.ctx.beginPath();
+                this.ctx.moveTo(this.StartX, this.StartY);
+                this.ctx.lineTo(e.clientX, e.clientY);
                 this.ctx.stroke();
             }
         }
