@@ -52,7 +52,7 @@ export default function Canvas(roomId: string) {
             {!loading &&
                 <div style={{ height: "100vh", overflow: "hidden" }}>
 
-                    <canvas style={{ position: "relative" }} id="canvas" ref={canvasref} width={window.innerWidth} height={window.innerHeight} className="border-2 border-black" ></canvas>
+                    <canvas style={{ position: "relative" }} id="canvas" ref={canvasref} width={window.innerWidth} height={window.innerHeight}  ></canvas>
                     <div className="flex justify-center border border-black" style={{ position: "absolute", top: "0", width: "100%" }}>
                         <Button
                             className={`my-4 mx-4 px-3 py-2 rounded-md border text-white ${shape === "rect" ? "bg-indigo-600 hover:bg-indigo-700" : "bg-red-500 hover:bg-red-600"
@@ -81,7 +81,7 @@ export default function Canvas(roomId: string) {
                         <Button
                             className={`my-4 mx-4 px-3 py-2 rounded-md border text-white ${shape === "pencil" ? "bg-blue-500 hover:bg-blue-600" : "bg-green-500 hover:bg-green-600"
                                 }`}
-                            appName="Line"
+                            appName="pencil"
                             onClick={onchange3}
                         >
                             pencil
