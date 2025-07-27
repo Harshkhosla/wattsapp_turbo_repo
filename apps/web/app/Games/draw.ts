@@ -53,7 +53,7 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , so
                 clicked = false;
                 const width = e.clientX-StartX;
                 const height = e.clientY-StartY;
-                const selectedTool = window.selectedTool;
+                const selectedTool = window?.selectedTool;
                 if(selectedTool == "circle"){
                     const raius = Math.sqrt(width**2 + height**2)
                     const shape: Shape = { type: "circle", centerX:StartX, centerY:StartY, radius:raius };

@@ -6,7 +6,7 @@ import { useSocket } from "../hooks/useSocket";
 import { Button } from "@repo/ui/button";
 import { Game } from "../Games/Game";
 
-export default function Canvas(roomId: string) {
+export default function Canvas(roomId: string | any) {
     const canvasref = useRef<HTMLCanvasElement>(null);
     const [shape, setShape] = useState<string>("rect")
     const [game , setGame ] = useState<Game | null>(null)

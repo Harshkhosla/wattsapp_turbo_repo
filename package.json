@@ -11,6 +11,7 @@
     "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/jsonwebtoken": "^9.0.8",
+    "nodemon": "^3.1.10",
     "prettier": "^3.2.5",
     "turbo": "^2.4.2",
     "typescript": "5.5.4"

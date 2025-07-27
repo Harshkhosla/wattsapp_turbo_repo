@@ -8,7 +8,7 @@ export function AuthComponent({ isSignin }:{isSignin:boolean}) {
         login: "",
         password: "",
     });
-    const change=(e)=>{
+    const change=(e:any)=>{
         e.preventDefault();
         setLogin({...login,[e.target.name]:e.target.value})
     }

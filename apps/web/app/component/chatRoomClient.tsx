@@ -15,13 +15,13 @@ export function ChatRoomClient({
 }) {
     const [chats, setChats] = useState(messages);
     const { loading, socket } = useSocket();
-    const [message, setMessage] = useState('');
+    const [message, setMessage] = useState<string>('');
 
     useEffect(() => {
         if (!loading && socket) {
             socket.send(JSON.stringify({ type: "join_room", roomId: id }));
 
-            const handleMessage = (event) => {
+            const handleMessage = (event:any) => {
                 const parsedData = JSON.parse(event.data);
                 if (parsedData.type === "chat") {
                     setChats((c) => [...c, { message: parsedData.message }]);
@@ -36,7 +36,7 @@ export function ChatRoomClient({
         }
     }, [loading, id, socket]);
 
-    const onChange = (e) => {
+    const onChange = (e:any) => {
         setMessage(e.target.value);
     };
 
