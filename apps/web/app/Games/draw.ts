@@ -53,7 +53,7 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , so
                 clicked = false;
                 const width = e.clientX-StartX;
                 const height = e.clientY-StartY;
-                const selectedTool = window?.selectedTool;
+                const selectedTool = (window as any)?.selectedTool;
                 if(selectedTool == "circle"){
                     const raius = Math.sqrt(width**2 + height**2)
                     const shape: Shape = { type: "circle", centerX:StartX, centerY:StartY, radius:raius };
@@ -68,13 +68,15 @@ export  async function initDraw (canvas: HTMLCanvasElement  , roomId:string , so
             }
                 
             })   
+
+            
             canvas.addEventListener('mousemove', (e) => {
                 if(clicked){
                     const width = e.clientX-StartX;
                     const height = e.clientY-StartY;
                     clearCanvas(existingShapes, canvas, ctx)
                     ctx.strokeStyle = 'rgba(255,255,255)'
-                    const selectedTool = window.selectedTool;
+                    const selectedTool = (window as any)?.selectedTool;
                     if(selectedTool == "rect"){
                         ctx.strokeRect(StartX, StartY, width, height)
                     }else if(selectedTool == "circle"){
