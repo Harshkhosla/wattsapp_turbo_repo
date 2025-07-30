@@ -16,8 +16,17 @@ model User {
   photo    String?
   rooms    Room[]
   chats    Chat[]
+  posts  Post[]
 }
 
+model Post {
+  id      Int    @id @default(autoincrement())
+  userId  String 
+  createdAt DateTime
+  title String
+  description String
+  author User @relation(fields: [userId],references: [id])
+}
 model Room {
   id        Int      @id @default(autoincrement())
   slug      String   @unique

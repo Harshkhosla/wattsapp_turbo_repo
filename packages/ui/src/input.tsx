@@ -1,15 +1,16 @@
 "use client"
 
 interface InputTypes {
-    placeholder: string,
+    placeholder?: string,
     onChange: any,
-    className: string,
-    value?:string
+    className?: string,
+    value?:string,
+    type?:string
 }
 
-export const Input = ({ placeholder, value ,onChange, className }: InputTypes) => {
+export const Input = ({ placeholder, value ,onChange, className, type }: InputTypes) => {
     return (
-        <input placeholder={placeholder} onChange={onChange} className={className} value={value} > 
+        <input type={type} multiple placeholder={placeholder} onChange={onChange} className={className} value={value} > 
         </input>
     )
 }
