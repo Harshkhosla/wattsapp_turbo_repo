@@ -6,11 +6,43 @@ import cors from 'cors';
 import jwt from "jsonwebtoken"
 import bycript, { hash } from "bcrypt";
 import { authMiddleware } from "./middleware";
+import multer from "multer";
 
 const client = new PrismaClient();
 const app = express()
 app.use(cors())
 app.use(express.json())
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/');
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname.concat(file.originalname)); 
+  }
+});
+const upload = multer({storage})
+
+app.post('/fileupload',upload.fields([
+    { name: 'file', maxCount: 3 },
+  { name: 'gallery', maxCount: 8 }]), async (req, res) => {
+  try {
+    if (
+      req?.files &&
+      typeof req.files === 'object' &&
+      !Array.isArray(req.files) &&
+      (req.files['file'] || req.files['gallery'])
+    ) {
+      console.log(req.files, "Files uploaded");
+      res.json({ message: "Files uploaded!", files: req.files });
+    } else {
+      res.status(400).json({ error: "No file uploaded" });
+    }
+  } catch (e: any) {
+    res.status(411).json({
+      error: "file not uploaded check it out yourself"
+    });
+}
+})
 
 // read whay removsamnc ed type module from there in pakate json what it dose
 

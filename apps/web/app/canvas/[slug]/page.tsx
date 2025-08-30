@@ -11,13 +11,8 @@ async function getRoomId (slug:string){
     return response.data.room?.id
 
 }
-
-export default  async function ChatRoom({ params }: {
-    params: {
-        slug: string
-    }
-}) {
-    const slug =  await params?.slug
+export default async function ChatRoom({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
     console.log(slug);
     
     const roomId = await getRoomId(slug)
@@ -25,7 +20,6 @@ export default  async function ChatRoom({ params }: {
 
         {/* <Text classname="mt-3 text-xl font-bold" children={`You have joined the room ${roomId}`}/> */}
        <Canvas id={roomId}/>
-        {/* <ChatRoomcmp id={roomId}/> */}
     </div>
 
 }

@@ -9,7 +9,8 @@
     "./code": "./src/code.tsx",
     "./input": "./src/input.tsx",
     "./text": "./src/Text.tsx",
-    "./chatRoom": "./src/chatroom.tsx"
+    "./chatRoom": "./src/chatroom.tsx",
+    "./demo": "./src/demo.tsx"
   },
   "scripts": {
     "lint": "eslint . --max-warnings 0",
